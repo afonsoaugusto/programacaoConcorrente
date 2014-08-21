@@ -11,7 +11,7 @@ package br.com.programacao.concorrente.entidades;
  * @author Afonso
  */
 public class Constantes {
-    public static int QTD_FILES = 5;
+    public static int QTD_FILES = 500;
     public static long INTERVAL_THREAD = 100L;
     public static int QTD_THREADS  = 10;
     

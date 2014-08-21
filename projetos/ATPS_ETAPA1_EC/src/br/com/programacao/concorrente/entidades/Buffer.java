@@ -20,7 +20,6 @@ public class Buffer {
     
     private Map<String,File> mapa;
     private List<String> chaves;
-    private boolean available = true;
 
     public Buffer(Map<String,File> mapa) {
         this.mapa = mapa;
@@ -54,13 +53,8 @@ public class Buffer {
 
     public synchronized String getNext() {
     	String retorno = null;
-    	if (this.available && !this.chaves.isEmpty()){
+    	if (!this.chaves.isEmpty()){
     		retorno =  this.chaves.remove(0);
-    		if(this.chaves.isEmpty()){
-    			this.available = false;	
-    		}else{
-    			this.available = true;
-    		}
     	}
 		return retorno;
     }
