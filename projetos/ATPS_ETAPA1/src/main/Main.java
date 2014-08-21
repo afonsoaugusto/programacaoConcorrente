@@ -7,7 +7,9 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +22,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Map<String,File> mapa = new HashMap<>();
-        mapa.put("ds", new File("xc"));
-        File file = mapa.remove("ds");
-        System.out.println(file.toString());
+            Buffer buffer = new Buffer();
+            Consumidor consumer = new Consumidor(buffer);
+            
+            for (int i = 0; i < Constantes.QTD_THREADS; i++) {
+                Thread t = new Thread(consumer);
+                t.start();
+            }
     }
     
 }
