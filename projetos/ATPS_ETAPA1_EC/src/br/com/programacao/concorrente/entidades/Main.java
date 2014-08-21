@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 /**
  *
  * @author Afonso
@@ -21,10 +23,14 @@ public class Main {
     /**
      * @param args the command line arguments
      */
+	
     public static void main(String[] args) {
             Buffer buffer = new Buffer();
             Consumidor consumer = new Consumidor(buffer);
             
+            
+            Log.logger.error("Did it again!");
+
             for (int i = 0; i < Constantes.QTD_THREADS; i++) {
                 Thread t = new Thread(consumer);
                 t.start();

@@ -7,9 +7,10 @@
 package br.com.programacao.concorrente.entidades;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Calendar;
+import java.util.Date;
 
+import org.apache.logging.log4j.Level;
 /**
  *
  * @author Afonso
@@ -23,21 +24,24 @@ public class Consumidor implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("iniciou"+" "+Thread.currentThread().getId());
+        System.out.println("Inicio da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
         String next = buffer.getNext();
         //System.out.println("iniciou"+" "+Thread.currentThread().getId()+" "+next+" "+buffer);
 		while(next != null){
             try {
                 File file = buffer.getFile(next);
                 long id = Thread.currentThread().getId();
-                System.out.println(file.getName()+" "+id);
+                String inicioLog = "Thread #"+id +" Pedido #"+file.getName()+" Inicio:"+ Calendar.getInstance().getTime();
+                System.out.println(inicioLog);
                 Thread.sleep(Constantes.INTERVAL_THREAD);
+                String fimLog = "Thread #"+id +" Pedido #"+file.getName()+" Termino:"+ Calendar.getInstance().getTime();
+                System.out.println(fimLog);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logger.log(Level.ERROR,ex);
             }finally{            	
             	next = buffer.getNext();
             }
         }    
-        System.out.println("terminou"+" "+Thread.currentThread().getId());
+		System.out.println("Termino da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
     }
 }
