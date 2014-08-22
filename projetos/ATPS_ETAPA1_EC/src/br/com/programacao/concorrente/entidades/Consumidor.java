@@ -24,7 +24,7 @@ public class Consumidor implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Inicio da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
+    	Log.getLogger(this.getClass()).debug("Inicio da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
         String next = buffer.getNext();
         //System.out.println("iniciou"+" "+Thread.currentThread().getId()+" "+next+" "+buffer);
 		while(next != null){
@@ -32,16 +32,16 @@ public class Consumidor implements Runnable{
                 File file = buffer.getFile(next);
                 long id = Thread.currentThread().getId();
                 String inicioLog = "Thread #"+id +" Pedido #"+file.getName()+" Inicio:"+ Calendar.getInstance().getTime();
-                System.out.println(inicioLog);
+                Log.getLogger(this.getClass()).debug(inicioLog);
                 Thread.sleep(Constantes.INTERVAL_THREAD);
                 String fimLog = "Thread #"+id +" Pedido #"+file.getName()+" Termino:"+ Calendar.getInstance().getTime();
-                System.out.println(fimLog);
+                Log.getLogger(this.getClass()).debug(fimLog);
             } catch (InterruptedException ex) {
-                Log.logger.log(Level.ERROR,ex);
+            	Log.getLogger(this.getClass()).error(ex);
             }finally{            	
             	next = buffer.getNext();
             }
         }    
-		System.out.println("Termino da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
+		Log.getLogger(this.getClass()).info("Termino da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
     }
 }

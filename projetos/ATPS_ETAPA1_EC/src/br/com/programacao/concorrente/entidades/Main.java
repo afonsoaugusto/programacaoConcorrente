@@ -29,7 +29,7 @@ public class Main {
             Consumidor consumer = new Consumidor(buffer);
             
             
-            Log.logger.error("Did it again!");
+            Log.getLogger(Main.class).debug("Did it again!");
 
             for (int i = 0; i < Constantes.QTD_THREADS; i++) {
                 Thread t = new Thread(consumer);
