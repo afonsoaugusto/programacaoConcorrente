@@ -26,7 +26,6 @@ public class Consumidor implements Runnable{
     public void run() {
     	Log.getLogger(this.getClass()).debug("Inicio da thread"+" "+Thread.currentThread().getId()+" "+Calendar.getInstance().getTime());
         String next = buffer.getNext();
-        //System.out.println("iniciou"+" "+Thread.currentThread().getId()+" "+next+" "+buffer);
 		while(next != null){
             try {
                 File file = buffer.getFile(next);

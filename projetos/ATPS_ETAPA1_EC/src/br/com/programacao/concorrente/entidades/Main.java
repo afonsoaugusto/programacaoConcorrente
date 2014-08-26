@@ -6,11 +6,7 @@
 
 package br.com.programacao.concorrente.entidades;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
 
 
@@ -30,6 +26,7 @@ public class Main {
             
             
             Log.getLogger(Main.class).debug("Did it again!");
+            Log.includeLogFile("1","sds", new Date());
 
             for (int i = 0; i < Constantes.QTD_THREADS; i++) {
                 Thread t = new Thread(consumer);

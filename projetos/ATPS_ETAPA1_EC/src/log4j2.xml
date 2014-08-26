@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug">
+<Configuration status="warn" name="MyApp" packages="">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
-    <File name="File1" fileName="output.log" bufferedIO="false" advertiseURI="file://C:/Desenvolvimento/faculdade/programacaoConcorrente/projetos/ATPS_ETAPA1_EC/output.log" advertise="true"/>
+    <File name="logFile" fileName="output.log">
+      	<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </File>
   </Appenders>
   <Loggers>
-    <Root level="error">
-      <AppenderRef ref="Console"/>
+    <Root level="debug">
+      <AppenderRef ref="logFile"/>
     </Root>
+    <Logger name="File" level="trace">
+      <AppenderRef ref="Console"/>
+    </Logger>
   </Loggers>
 </Configuration>
