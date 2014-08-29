@@ -1,7 +1,7 @@
 package br.example;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void test(String[] args) {
 	    Buffer bufferCompartilhado = new Buffer();
 	    Produtor produtor1 = new Produtor(1, bufferCompartilhado, 100);
 	    //Produtor produtor2 = new Produtor(2, bufferCompartilhado, 5);

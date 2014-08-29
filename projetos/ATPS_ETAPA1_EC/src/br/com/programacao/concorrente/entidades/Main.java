@@ -6,32 +6,39 @@
 
 package br.com.programacao.concorrente.entidades;
 
-import java.util.Date;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
-
+import javax.swing.JOptionPane;
 
 /**
- *
+ * 
  * @author Afonso
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
-	
-    public static void main(String[] args) {
-            Buffer buffer = new Buffer();
-            Consumidor consumer = new Consumidor(buffer);
-            
-            
-            Log.getLogger(Main.class).debug("Did it again!");
-            Log.includeLogFile("1","sds", new Date());
+	/**
+	 * @param args
+	 *            the command line arguments
+	 */
 
-            for (int i = 0; i < Constantes.QTD_THREADS; i++) {
-                Thread t = new Thread(consumer);
-                t.start();
-            }
-    }
-    
+	public static void main(String[] args) {
+		Buffer buffer;
+		//for (int i = 0; i <= Constantes.NUM_MAX_EXECUTION; i++) {
+		int i = Integer.parseInt(JOptionPane.showInputDialog("Qual é o numero da execução?"));
+			try {
+				buffer = new Buffer();
+				Consumidor consumer = new Consumidor(buffer,i);
+				for (int j = 0; j < Constantes.QTD_THREADS; j++) {
+					Thread t = new Thread(consumer);
+					t.start();
+				}
+			} catch (FileNotFoundException e) {
+				Log.getLogger(Main.class).error(e.getMessage());
+			} catch (UnsupportedEncodingException e) {
+				Log.getLogger(Main.class).error(e.getMessage());
+			}
+		//}
+	}
+
 }

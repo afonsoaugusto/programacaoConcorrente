@@ -7,6 +7,9 @@
 package br.com.programacao.concorrente.entidades;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,15 +29,22 @@ public class Buffer {
         this.chaves = getListChaves(mapa);
     }
     
-    public Buffer() {
+    public Buffer() throws FileNotFoundException, UnsupportedEncodingException {
         this.mapa = createMapa();
         this.chaves = getListChaves(mapa);
     }
 
-    private Map<String, File> createMapa() {
+    private Map<String, File> createMapa() throws FileNotFoundException, UnsupportedEncodingException {
        Map<String,File> map = new HashMap<String,File>();
         for (int i = 0; i < Constantes.QTD_FILES; i++) {
-            map.put(String.valueOf(i), new File("file"+i));
+        	File file = new File(String.format("%04d", i)+".file");
+        	PrintWriter writer = new PrintWriter(file, "UTF-8");
+        	writer.println("The first line");
+        	writer.println("The second line");
+        	writer.close();
+        	
+            map.put(String.valueOf(i), file);
+            file.delete();
         }
        return map;
     }
