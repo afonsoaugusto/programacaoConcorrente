@@ -23,6 +23,7 @@ public class Buffer {
     
     private Map<String,File> mapa;
     private List<String> chaves;
+    private boolean lock = false;
 
     public Buffer(Map<String,File> mapa) {
         this.mapa = mapa;
@@ -35,19 +36,19 @@ public class Buffer {
     }
 
     private Map<String, File> createMapa() throws FileNotFoundException, UnsupportedEncodingException {
-       Map<String,File> map = new HashMap<String,File>();
-        for (int i = 0; i < Constantes.QTD_FILES; i++) {
-        	File file = new File(String.format("%04d", i)+".file");
-        	PrintWriter writer = new PrintWriter(file, "UTF-8");
-        	writer.println("The first line");
-        	writer.println("The second line");
-        	writer.close();
-        	
-            map.put(String.valueOf(i), file);
-            file.delete();
-        }
-       return map;
-    }
+        Map<String,File> map = new HashMap<String,File>();
+         for (int i = 0; i < Constantes.QTD_FILES; i++) {
+         	File file = new File(String.format("%04d", i)+".file");
+         	PrintWriter writer = new PrintWriter(file, "UTF-8");
+         	writer.println("The first line");
+         	writer.println("The second line");
+         	writer.close();
+         	
+             map.put(String.valueOf(i), file);
+             file.delete();
+         }
+        return map;
+     }
 
     private List<String> getListChaves(Map<String, File> mapa) {
         List<String> list = new ArrayList<String>();
@@ -61,11 +62,14 @@ public class Buffer {
  	   return mapa.remove(chave);   
     }
 
-    public synchronized String getNext() {
+    public String getNext() {
     	String retorno = null;
-    	if (!this.chaves.isEmpty()){
+    	//if (!this.chaves.isEmpty()){
+    	if (!lock && this.chaves.size() > 0){
+    		lock = true;
     		retorno =  this.chaves.remove(0);
     	}
+    	lock = false;
 		return retorno;
     }
     

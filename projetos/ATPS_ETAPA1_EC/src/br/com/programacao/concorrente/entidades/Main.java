@@ -9,7 +9,6 @@ package br.com.programacao.concorrente.entidades;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
-import javax.swing.JOptionPane;
 
 /**
  * 
@@ -24,21 +23,17 @@ public class Main {
 
 	public static void main(String[] args) {
 		Buffer buffer;
-		//for (int i = 0; i <= Constantes.NUM_MAX_EXECUTION; i++) {
-		int i = Integer.parseInt(JOptionPane.showInputDialog("Qual é o numero da execução?"));
-			try {
-				buffer = new Buffer();
-				Consumidor consumer = new Consumidor(buffer,i);
-				for (int j = 0; j < Constantes.QTD_THREADS; j++) {
-					Thread t = new Thread(consumer);
-					t.start();
-				}
-			} catch (FileNotFoundException e) {
-				Log.getLogger(Main.class).error(e.getMessage());
-			} catch (UnsupportedEncodingException e) {
-				Log.getLogger(Main.class).error(e.getMessage());
+		try {
+			buffer = new Buffer();
+			Consumidor consumer = new Consumidor(buffer,1);
+			for (int i = 0; i < Constantes.QTD_THREADS; i++) {
+				Thread t = new Thread(consumer, "Aluno - " + i);
+				t.start();
 			}
-		//}
+
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			Log.getLogger(Main.class).error(e);
+		}
 	}
 
 }
